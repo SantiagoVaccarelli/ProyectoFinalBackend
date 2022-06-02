@@ -4,15 +4,12 @@ const Contenedor = require('./contenedor')
 const contenedor = new Contenedor("productos.json", ["timestamp", "title", "price", "description", "code", "image", "stock"]);
 const carrito = new Contenedor("carrito.json", ["timestamp", "products"])
 
-const dotenv = require('dotenv');
-dotenv.config();
-console.log(`Port... ${process.env.TOKEN}`);
-
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 const authMiddleware = app.use((req, res, next) => {
-    req.header('authorization') == process.env.TOKEN 
+    // req.header('authorization') == process.env.TOKEN
+    true 
         ? next() : next()
         //: res.status(401).json({"error": "unauthorized"})
 })
