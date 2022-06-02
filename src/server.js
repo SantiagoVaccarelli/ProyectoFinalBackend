@@ -24,7 +24,6 @@ routerProducts.get('/', async (req, res) => {
     res.status(200).json(products);
 })
 
-
 routerProducts.get('/:id', async (req, res) => {
     const { id } = req.params;
     const product = await contenedor.getById(id);
