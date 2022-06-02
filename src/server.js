@@ -13,8 +13,8 @@ app.use(express.urlencoded({extended:true}));
 
 const authMiddleware = app.use((req, res, next) => {
     req.header('authorization') == process.env.TOKEN 
-        ? next()
-        : res.status(401).json({"error": "unauthorized"})
+        ? next() : next()
+        //: res.status(401).json({"error": "unauthorized"})
 })
 
 const routerProducts = express.Router();
@@ -144,7 +144,7 @@ routerCart.delete('/:id/productos/:id_prod', async(req, res) => {
     }
 })
 
-const PORT = 8020;
+const PORT = 8080;
 const server = app.listen(PORT, () => {
 console.log(` >>>>> 🚀 Server started at http://localhost:${PORT}`)
 })
