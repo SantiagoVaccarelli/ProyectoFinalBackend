@@ -1,0 +1,12 @@
+PUT http://localhost:8080/api/productos/44zXF0fZxpajLztaqR18
+Content-Type: application/json
+
+{
+    "timestamp": 12,
+    "title": "chau",
+    "price": 1,
+    "description": 1,
+    "code": 1,
+    "image": 1,
+    "stock": 1
+}

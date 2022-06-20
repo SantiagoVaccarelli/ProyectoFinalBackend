@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const Contenedor = require('./contenedor')
+const Contenedor = require('./contenedorFirebase')
 const contenedor = new Contenedor("productos.json", ["timestamp", "title", "price", "description", "code", "image", "stock"]);
 const carrito = new Contenedor("carrito.json", ["timestamp", "products"])
 
@@ -27,6 +27,7 @@ routerProducts.get('/', async (req, res) => {
 routerProducts.get('/:id', async (req, res) => {
     const { id } = req.params;
     const product = await contenedor.getById(id);
+    console.log(product)
     product? res.status(200).json(product): res.status(400).json({"error": "product not found"})
 })
 
@@ -41,14 +42,13 @@ routerProducts.put('/:id', adminMiddleware ,async (req, res, next) => {
     const id = req.params.id;
     const body = req.body;
     const wasUpdated = await contenedor.updateById(id,body);
-    wasUpdated? res.status(200).json({"success" : "product updated"}): res.status(404).json({"error": "product not found"})
+    res.status(200).json({"success" : "product updated"})
 })
-
 
 routerProducts.delete('/:id', adminMiddleware, async (req, res, next) => {
     const id = req.params.id;
-    const wasDeleted = await contenedor.deleteById(id);
-    wasDeleted? res.status(200).json({"success": "product successfully removed"}): res.status(404).json({"error": "product not found"})
+    await contenedor.deleteById(id);
+    res.status(200).json({"success": "product successfully removed"})
 })
 
 routerCart.post('/', async(req, res) => {
@@ -56,13 +56,12 @@ routerCart.post('/', async(req, res) => {
     body.timestamp = Date.now();
     const newCartId = await carrito.save(body);
     newCartId? res.status(200).json({"success" : "cart added with ID: "+newCartId}): res.status(400).json({"error": "invalid key. Please verify the body content"})
-    
 })
 
 routerCart.delete('/:id', async (req, res) => {
     const {id} = req.params;
     const wasDeleted = await carrito.deleteById(id);
-    wasDeleted? res.status(200).json({"success": "cart successfully removed"}): res.status(404).json({"error": "cart not found"})
+    res.status(200).json({"success": "cart successfully removed"})
 })
 
 routerCart.post('/:id/productos', async(req,res) => {
