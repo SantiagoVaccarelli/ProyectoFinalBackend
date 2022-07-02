@@ -1,10 +1,19 @@
 const express = require('express');
 const app = express();
-//const Contenedor = require('./Contenedores/contenedorFirebase')
-//const Contenedor = require('./Contenedores/contenedorArchivo')
-const Contenedor = require('./Contenedores/ContenedorMongoDB')
-const contenedor = new Contenedor("productos.json", ["timestamp", "title", "price", "description", "code", "image", "stock"]);
-const carrito = new Contenedor("carrito.json", ["timestamp", "products"])
+// Archivo
+// const ContenedorProducto = require('./daos/daoProductosArchivo')
+// const ContenedorCarrito = require('./daos/daoCarritosArchivo')
+
+// Firebase
+// const ContenedorProducto = require('./daos/daoProductosFirebase')
+// const ContenedorCarrito = require('./daos/daoCarritosFirebase')
+
+// MongoDB
+const ContenedorProducto = require('./daos/daoProductosMongoDB')
+const ContenedorCarrito = require('./daos/daoCarritosMongoDB')
+
+const contenedor = new ContenedorProducto();
+const carrito = new ContenedorCarrito()
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -22,7 +31,6 @@ const adminMiddleware = app.use((req, res, next) => {
 })
 
 routerProducts.get('/', async (req, res) => {
-    console.log(contenedor)
     const products = await contenedor.getAll();
     res.status(200).json(products);
 })
@@ -36,7 +44,6 @@ routerProducts.get('/:id', async (req, res) => {
 routerProducts.post('/',adminMiddleware, async (req,res, next) => {
     const body = req.body;
     //body.timestamp = Date.now();   
-    console.log(body)
     const newProductId = await contenedor.save(body);
     newProductId? res.status(200).json({"success" : "product added with ID: "+newProductId}): res.status(400).json({"error": "invalid key. Please verify the body content"})
 })

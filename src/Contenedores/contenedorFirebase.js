@@ -5,32 +5,36 @@ admin.initializeApp({
 });
 
 const db = admin.firestore()
-const query = db.collection('productos')
 
 class Contenedor {
+
+	constructor(){
+		this.query = db.collection('productos')
+	}
+
 	async getById(id) {
-		const document = await query.doc(id).get()
+		const document = await this.query.doc(id).get()
 		return document.data()
 	}
 
 	async deleteById(id) {
-		await query.doc(id).delete()
+		await this.query.doc(id).delete()
 	}
 
 	async updateById(id, newData) {	
 		newData.id = id
-		await query.doc(id).set(newData)
+		await this.query.doc(id).set(newData)
 	}
 
 	async save(object) {    
-		const product = await query.add(object)
+		const product = await this.query.add(object)
 		object.id = product.id
-		query.doc(product.id).set(object)
+		this.query.doc(product.id).set(object)
 		return product.id
 	}
 
 	async getAll() {
-		const snapshot = await query.get()
+		const snapshot = await this.query.get()
     	return snapshot.docs.map(doc => doc.data());
 	}
 }

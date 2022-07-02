@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose")
 
-export const carritosSchema = new mongoose.Schema({
+const carritosSchema = new mongoose.Schema({
     productos: [
         {
             producto: {
@@ -15,3 +15,5 @@ export const carritosSchema = new mongoose.Schema({
         }
     ],
 });
+
+module.exports = carritosSchema

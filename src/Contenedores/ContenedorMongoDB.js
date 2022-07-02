@@ -3,9 +3,9 @@ const productosSchema = require("../schemas/productoSchema")
 
 mongoose.connect("mongodb://localhost:27017");
 
-class ContainerMongoDB {
-    constructor() {
-        this.collection = mongoose.model('products',productosSchema)
+class Contenedor {
+    constructor(collection, schema) {
+        this.collection = mongoose.model(collection,schema)
     }
 
     async save(prod) {
@@ -35,4 +35,4 @@ class ContainerMongoDB {
     }
 }
 
-module.exports = ContainerMongoDB;
+module.exports = Contenedor;
