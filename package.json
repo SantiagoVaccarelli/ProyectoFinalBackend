@@ -11,8 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.1",
     "express": "^4.17.3",
     "firebase-admin": "^11.0.0",
+    "mongo": "^0.1.0",
+    "mongodb": "^4.7.0",
+    "mongoose": "^6.4.2",
     "nodemon": "^2.0.16"
   }
 }

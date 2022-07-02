@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
-const Contenedor = require('./contenedorFirebase')
+//const Contenedor = require('./Contenedores/contenedorFirebase')
+//const Contenedor = require('./Contenedores/contenedorArchivo')
+const Contenedor = require('./Contenedores/ContenedorMongoDB')
 const contenedor = new Contenedor("productos.json", ["timestamp", "title", "price", "description", "code", "image", "stock"]);
 const carrito = new Contenedor("carrito.json", ["timestamp", "products"])
 
@@ -20,6 +22,7 @@ const adminMiddleware = app.use((req, res, next) => {
 })
 
 routerProducts.get('/', async (req, res) => {
+    console.log(contenedor)
     const products = await contenedor.getAll();
     res.status(200).json(products);
 })
@@ -27,13 +30,13 @@ routerProducts.get('/', async (req, res) => {
 routerProducts.get('/:id', async (req, res) => {
     const { id } = req.params;
     const product = await contenedor.getById(id);
-    console.log(product)
     product? res.status(200).json(product): res.status(400).json({"error": "product not found"})
 })
 
 routerProducts.post('/',adminMiddleware, async (req,res, next) => {
     const body = req.body;
-    body.timestamp = Date.now();   
+    //body.timestamp = Date.now();   
+    console.log(body)
     const newProductId = await contenedor.save(body);
     newProductId? res.status(200).json({"success" : "product added with ID: "+newProductId}): res.status(400).json({"error": "invalid key. Please verify the body content"})
 })

@@ -1,9 +1,8 @@
-PUT http://localhost:8080/api/productos/44zXF0fZxpajLztaqR18
+post http://localhost:8080/api/productos
 Content-Type: application/json
 
 {
-    "timestamp": 12,
-    "title": "chau",
+    "title": "asdfqaw e4x",
     "price": 1,
     "description": 1,
     "code": 1,
