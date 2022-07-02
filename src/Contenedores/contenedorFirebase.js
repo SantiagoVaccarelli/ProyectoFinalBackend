@@ -8,8 +8,8 @@ const db = admin.firestore()
 
 class Contenedor {
 
-	constructor(){
-		this.query = db.collection('productos')
+	constructor(collection){
+		this.query = db.collection(collection)
 	}
 
 	async getById(id) {

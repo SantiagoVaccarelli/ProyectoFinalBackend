@@ -1,16 +1,17 @@
 const express = require('express');
 const app = express();
+
 // Archivo
-// const ContenedorProducto = require('./daos/daoProductosArchivo')
-// const ContenedorCarrito = require('./daos/daoCarritosArchivo')
+const ContenedorProducto = require('./daos/daoProductosArchivo')
+const ContenedorCarrito = require('./daos/daoCarritosArchivo')
 
 // Firebase
 // const ContenedorProducto = require('./daos/daoProductosFirebase')
 // const ContenedorCarrito = require('./daos/daoCarritosFirebase')
 
 // MongoDB
-const ContenedorProducto = require('./daos/daoProductosMongoDB')
-const ContenedorCarrito = require('./daos/daoCarritosMongoDB')
+// const ContenedorProducto = require('./daos/daoProductosMongoDB')
+// const ContenedorCarrito = require('./daos/daoCarritosMongoDB')
 
 const contenedor = new ContenedorProducto();
 const carrito = new ContenedorCarrito()
@@ -64,6 +65,9 @@ routerProducts.delete('/:id', adminMiddleware, async (req, res, next) => {
 routerCart.post('/', async(req, res) => {
     const body = req.body;
     body.timestamp = Date.now();
+    for (let i = 0; body.products[i]; ) {
+        body.products[i] = await contenedor.getById(body.products[i++])
+    }
     const newCartId = await carrito.save(body);
     newCartId? res.status(200).json({"success" : "cart added with ID: "+newCartId}): res.status(400).json({"error": "invalid key. Please verify the body content"})
 })
@@ -84,6 +88,17 @@ routerCart.post('/:id/productos', async(req,res) => {
     } else {
         res.status(404).json({"error": "product not found, verify the ID in the body content is correct."})
     }
+})
+
+routerCart.get('/', async (req, res) => {
+    const carritos = await carrito.getAll();
+    res.status(200).json(carritos);
+})
+
+routerCart.get('/:id', async (req, res) => {
+    const { id } = req.params;
+    const cart = await carrito.getById(id);
+    cart? res.status(200).json(cart): res.status(400).json({"error": "cart not found"})
 })
 
 routerCart.get('/:id/productos', async(req, res) => {

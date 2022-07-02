@@ -45,7 +45,6 @@ class Contenedor {
     try {
       const data = await this.getData();
       const parsedData = JSON.parse(data);
-
       return parsedData.find((producto) => producto.id === id);
     } catch (error) {
       console.log(
