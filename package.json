@@ -1,18 +1,22 @@
 {
+  "type": "module",
   "name": "entrega-7",
   "version": "1.0.0",
   "description": "### Consignas",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js"
+    "start": "nodemon src/server.js",
+    "startSession": "nodemon src/serverSession.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
     "express": "^4.17.3",
+    "express-session": "^1.17.3",
     "firebase-admin": "^11.0.0",
     "mongo": "^0.1.0",
     "mongodb": "^4.7.0",
