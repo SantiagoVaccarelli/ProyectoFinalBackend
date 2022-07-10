@@ -7,7 +7,6 @@ import path from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-//TO RUN TRY : npm run startSession
 const app = express();
 
 app.use(express.static(__dirname + '/public'));
