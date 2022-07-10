@@ -1,13 +1,13 @@
-post http://localhost:8080/api/carrito
+post http://localhost:8080/api/productos
 Content-Type: application/json
 
 {
-    //"title": "Mongo",
-    //"price": 1,
-    //"description": 1,
-    //"code": 1,
-    //"image": 1,
-    //"stock": 1
-    "timestamp":123,
-    "products": [1,2]
+    "title": "Mongo",
+    "price": 1,
+    "description": 1,
+    "code": 1,
+    "image": 1,
+    "stock": 1
+    // "timestamp":123,
+    // "products": [1,2]
 }

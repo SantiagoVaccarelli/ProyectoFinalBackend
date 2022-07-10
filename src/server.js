@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 
 // Archivo
-const ContenedorProducto = require('./daos/daoProductosArchivo')
-const ContenedorCarrito = require('./daos/daoCarritosArchivo')
+// const ContenedorProducto = require('./daos/daoProductosArchivo')
+// const ContenedorCarrito = require('./daos/daoCarritosArchivo')
 
 // Firebase
-// const ContenedorProducto = require('./daos/daoProductosFirebase')
-// const ContenedorCarrito = require('./daos/daoCarritosFirebase')
+const ContenedorProducto = require('./daos/daoProductosFirebase')
+const ContenedorCarrito = require('./daos/daoCarritosFirebase')
 
 // MongoDB
 // const ContenedorProducto = require('./daos/daoProductosMongoDB')
