@@ -7,12 +7,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server.js",
-    "startSession": "nodemon src/serverSession.js"
+    "startSession": "nodemon src/serverSession.js",
+    "startPassport": "nodemon src/serverPassport.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.1",
     "ejs": "^3.1.8",
     "express": "^4.17.3",
@@ -21,6 +23,8 @@
     "mongo": "^0.1.0",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.2",
-    "nodemon": "^2.0.16"
+    "nodemon": "^2.0.16",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   }
 }
