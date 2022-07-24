@@ -1,7 +1,8 @@
+require("dotenv").config()
 const mongoose = require("mongoose")
 const productosSchema = require("../schemas/productoSchema")
 
-mongoose.connect("mongodb://localhost:27017");
+mongoose.connect(process.env.MONGO_SERVER);
 
 class Contenedor {
     constructor(collection, schema) {

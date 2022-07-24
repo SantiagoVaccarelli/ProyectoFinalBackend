@@ -1,17 +1,18 @@
 const express = require('express');
 const app = express();
+const argv = require('minimist')(process.argv.slice(2), {default: {puerto:8080}, alias:{p:"puerto"}})
 
 // Archivo
 // const ContenedorProducto = require('./daos/daoProductosArchivo')
 // const ContenedorCarrito = require('./daos/daoCarritosArchivo')
 
 // Firebase
-const ContenedorProducto = require('./daos/daoProductosFirebase')
-const ContenedorCarrito = require('./daos/daoCarritosFirebase')
+// const ContenedorProducto = require('./daos/daoProductosFirebase')
+// const ContenedorCarrito = require('./daos/daoCarritosFirebase')
 
 // MongoDB
-// const ContenedorProducto = require('./daos/daoProductosMongoDB')
-// const ContenedorCarrito = require('./daos/daoCarritosMongoDB')
+const ContenedorProducto = require('./daos/daoProductosMongoDB')
+const ContenedorCarrito = require('./daos/daoCarritosMongoDB')
 
 const contenedor = new ContenedorProducto();
 const carrito = new ContenedorCarrito()
@@ -23,9 +24,11 @@ const isAdmin = true;
 
 const routerProducts = express.Router();
 const routerCart = express.Router();
+const routerInfo = express.Router();
 
 app.use('/api/productos', routerProducts);
 app.use('/api/carrito', routerCart);
+app.use('/api/info', routerInfo);
 
 const adminMiddleware = app.use((req, res, next) => {
     isAdmin? next(): res.status(401).json({"error": "unauthorized"})
@@ -120,7 +123,11 @@ routerCart.delete('/:id/productos/:id_prod', async(req, res) => {
     }
 })
 
-const PORT = 8080;
+routerInfo.get('/', (req, res)=>{
+    res.send('hola')
+})
+
+const PORT = argv.puerto || 8080;
 const server = app.listen(PORT, () => {
     console.log(`Servidor escuchando al puerto ${PORT}`)
 })

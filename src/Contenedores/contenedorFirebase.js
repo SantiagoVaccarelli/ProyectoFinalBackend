@@ -1,5 +1,7 @@
+require("dotenv").config()
 var admin = require("firebase-admin");
-var serviceAccount = require("../ecommerce-15df5-firebase-adminsdk-8zs4l-c98457b92b.json");
+var serviceAccount = require(process.env.FIREBASE_KEY);
+
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });

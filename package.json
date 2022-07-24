@@ -1,12 +1,11 @@
 {
-  "type": "module",
   "name": "entrega-7",
   "version": "1.0.0",
   "description": "### Consignas",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js",
+    "start": "nodemon src/server.js -p 2342",
     "startSession": "nodemon src/serverSession.js"
   },
   "keywords": [],
@@ -18,6 +17,7 @@
     "express": "^4.17.3",
     "express-session": "^1.17.3",
     "firebase-admin": "^11.0.0",
+    "minimist": "^1.2.6",
     "mongo": "^0.1.0",
     "mongodb": "^4.7.0",
     "mongoose": "^6.4.2",
