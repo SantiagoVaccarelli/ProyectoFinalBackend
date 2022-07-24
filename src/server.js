@@ -124,7 +124,16 @@ routerCart.delete('/:id/productos/:id_prod', async(req, res) => {
 })
 
 routerInfo.get('/', (req, res)=>{
-    res.send('hola')
+    const info = {
+        argumentosDeEntrada: argv,
+        sistemaOperativo: process.platform,
+        nodeVersion: process.version,
+        memoriaUsada: process.memoryUsage(),
+        processId: process.pid,
+        carpeta: process.cwd(),
+        path: process.argv[1]
+    } 
+    res.json(info)
 })
 
 const PORT = argv.puerto || 8080;
