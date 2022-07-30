@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const argv = require('minimist')(process.argv.slice(2), {default: {puerto:8080}, alias:{p:"puerto"}})
+const { fork } = require('child_process')
 
 // Archivo
 // const ContenedorProducto = require('./daos/daoProductosArchivo')
@@ -25,10 +26,12 @@ const isAdmin = true;
 const routerProducts = express.Router();
 const routerCart = express.Router();
 const routerInfo = express.Router();
+const routerRandoms = express.Router();
 
 app.use('/api/productos', routerProducts);
 app.use('/api/carrito', routerCart);
 app.use('/api/info', routerInfo);
+app.use('/api/randoms', routerRandoms);
 
 const adminMiddleware = app.use((req, res, next) => {
     isAdmin? next(): res.status(401).json({"error": "unauthorized"})
@@ -134,6 +137,14 @@ routerInfo.get('/', (req, res)=>{
         path: process.argv[1]
     } 
     res.json(info)
+})
+
+routerRandoms.get('/', (req, res)=>{
+    const randomNumberFunction = fork('src/functions/randomNumber')    
+    randomNumberFunction.on('message', (resultado) => {
+        res.json(resultado);
+    })
+    randomNumberFunction.send(req.query.cant || 5000);
 })
 
 const PORT = argv.puerto || 8080;
